@@ -1,6 +1,7 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
+asdaskasjdasjkdnajd
 
 class BooksApp extends React.Component {
   state = {
@@ -10,12 +11,31 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    
-    showSearchPage: false
   }
 
   render() {
     return (
+      <Switch>
+        <Route exact path='/' render={() => (
+            <ListBooks
+              updateShelf={this.updateShelf}
+              books={this.state.books}
+              shelves={this.state.shelves}
+              shelfTypes={this.state.shelfTypes}
+            />
+          )}/>
+          <Route exact path='/search' render={() => (
+            <SearchBooks
+              updateShelf={this.updateShelfWithDataReload}
+              books={this.state.books}
+              shelves={tsdhis.state.shelves}
+              shelfTypes={this.state.shelfTypes}
+            />
+          )}/>
+        </Switch>
+
+
+
       <div className="app">
         {this.state.showSearchPage ? (
           <div className="search-books">
