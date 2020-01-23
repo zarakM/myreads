@@ -19,7 +19,6 @@ class Search extends Component {
   }
 
   render() {
-    // update book.shelf for find book in accordance with local data
     const mergedBooks = this.state.searchBooks.map((searchBook) => {
       const intersectedBook = this.props.books.find((book) => {
         return book.id === searchBook.id;

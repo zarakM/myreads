@@ -2,11 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 class SingleBook extends Component {
-  static propTypes = {
-    book: PropTypes.array.isRequired
-  };
-
-  
   render() {
     const book = this.props.book;
     return (
@@ -48,7 +43,7 @@ class SingleBook extends Component {
     );
   }
   static propTypes = {
-    books: PropTypes.array.isRequired
+    book: PropTypes.object.isRequired
   };
 }
 

@@ -28,9 +28,7 @@ class BooksApp extends React.Component {
       this.setState({ books, shelf_data });
     });
   }
-  // update shelf of concrete book without request to server
-  // used on '/' route
-  // because all books already saved into the state
+  
   updateShelf = (book, shelf) => {
     BooksAPI.update(book, shelf).then(shelf_data => {
       book.shelf = shelf;
@@ -38,10 +36,7 @@ class BooksApp extends React.Component {
     });
   };
 
-  // update shelf of concrete book with request to server
-  // used on '/search' route
-  // because user can add new books
-  updateShelfWithDataReload = (book, shelf) => {
+  updateShelf_r = (book, shelf) => {
     BooksAPI.update(book, shelf).then(shelves => {
       book.shelf = shelf;
       this.getData();
@@ -69,7 +64,7 @@ class BooksApp extends React.Component {
             path="/search"
             render={() => (
               <Search
-                updateShelf={this.updateShelfWithDataReload}
+                updateShelf={this.updateShelf_r}
                 books={this.state.books}
                 shelves={this.state.shelves}
                 shelfTypes={this.state.shelfTypes}
