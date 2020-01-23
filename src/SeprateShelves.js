@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Book from './Book';
+import SingleBook from './SingleBook';
 
-class Bookshelf extends Component {
+class SeprateShelves extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired
   }
@@ -17,6 +17,7 @@ class Bookshelf extends Component {
   }
 
   render() {
+    console.log(this.props.type)
 
     const filteredBooks = this.props.books.filter((book) => {
       return this.props.type === 'none' ?
@@ -33,7 +34,7 @@ class Bookshelf extends Component {
         <div className="bookshelf-books">
           <ol className="books-grid">
             {filteredBooks.map((book) => (
-              <Book
+              <SingleBook
                 key={book.id}
                 book={book}
                 updateShelf={this.props.updateShelf}
@@ -46,4 +47,4 @@ class Bookshelf extends Component {
   }
 };
 
-export default Bookshelf;
+export default SeprateShelves;

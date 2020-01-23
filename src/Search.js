@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
-import Book from './Book';
+import SingleBook from './SingleBook';
 
-class SearchBooks extends Component {
+class Search extends Component {
   state = {
     searchBooks: []
   }
@@ -13,6 +13,8 @@ class SearchBooks extends Component {
       this.setState({
         searchBooks: books.error ? [] : books
       });
+    }).catch(error=>{
+      console.log( error )
     });
   }
 
@@ -53,7 +55,7 @@ class SearchBooks extends Component {
         <div className="search-books-results">
           <ol className="books-grid">
             {mergedBooks.map((book) => (
-              <Book
+              <SingleBook
                 key={book.id}
                 book={book}
                 updateShelf={this.props.updateShelf}
@@ -66,4 +68,4 @@ class SearchBooks extends Component {
   }
 };
 
-export default SearchBooks;
+export default Search;

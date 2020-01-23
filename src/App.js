@@ -1,80 +1,85 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import * as BooksAPI from './BooksAPI';
-import SearchBooks from './SearchBooks';
-import ListBooks from './ListBooks';
-import './App.css';
+import React from "react";
+import { Switch, Route } from "react-router-dom";
+import * as BooksAPI from "./BooksAPI";
+import Search from "./Search";
+import BookList from "./BookList";
+import "./App.css";
 
 class BooksApp extends React.Component {
   state = {
     books: [],
-    shelfTypes: ['currentlyReading', 'wantToRead', 'read'],
-    shelves: {}
-  }
+    shelves: ["currentlyReading", "wantToRead", "read"], //shelves_type
+    shelf_data: {}                                        //shelves
+  };
 
   componentDidMount() {
-    this.getAllBooks();
+    this.getData()
   }
 
-  getAllBooks = () => {
-    BooksAPI.getAll().then((books) => {
-      const shelves = this.state.shelfTypes.reduce((data, state) => {
-        data[state] = books.filter((book) => book.shelf === state).map((book) => book.id);
-        console.log(data)
+  getData=()=>{
+    BooksAPI.getAll().then(books => {
+      const shelf_data = this.state.shelves.reduce((data, state) => {
+        data[state] = books
+          .filter(book => book.shelf === state)
+          .map(book => book.id);
+        console.log(data);
         return data;
-      },{});
-      // console.log(books)
-      // console.log(shelves)
-      this.setState({ books, shelves })
-      // console.log(books)
-      // console.log(shelves)
+      }, {});
+      this.setState({ books, shelf_data });
     });
   }
-
   // update shelf of concrete book without request to server
   // used on '/' route
   // because all books already saved into the state
   updateShelf = (book, shelf) => {
-    BooksAPI.update(book, shelf).then((shelves) => {
+    BooksAPI.update(book, shelf).then(shelf_data => {
       book.shelf = shelf;
-      this.setState({shelves});
+      this.setState({ shelf_data });
     });
-  }
+  };
 
   // update shelf of concrete book with request to server
   // used on '/search' route
   // because user can add new books
   updateShelfWithDataReload = (book, shelf) => {
-    BooksAPI.update(book, shelf).then((shelves) => {
+    BooksAPI.update(book, shelf).then(shelves => {
       book.shelf = shelf;
-      this.getAllBooks();
+      this.getData();
     });
-  }
+  };
 
   render() {
     return (
       <div className="app">
         <Switch>
-          <Route exact path='/' render={() => (
-            <ListBooks
-              updateShelf={this.updateShelf}
-              books={this.state.books}
-              shelves={this.state.shelves}
-              shelfTypes={this.state.shelfTypes}
-            />
-          )}/>
-          <Route exact path='/search' render={() => (
-            <SearchBooks
-              updateShelf={this.updateShelfWithDataReload}
-              books={this.state.books}
-              shelves={this.state.shelves}
-              shelfTypes={this.state.shelfTypes}
-              as
-            />
-          )}/>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <BookList
+                updateShelf={this.updateShelf}
+                books={this.state.books}
+                shelf_data={this.state.shelf_data}
+                shelves={this.state.shelves}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/search"
+            render={() => (
+              <Search
+                updateShelf={this.updateShelfWithDataReload}
+                books={this.state.books}
+                shelves={this.state.shelves}
+                shelfTypes={this.state.shelfTypes}
+                as
+              />
+            )}
+          />
         </Switch>
       </div>
-    )
+    );
   }
 }
 
