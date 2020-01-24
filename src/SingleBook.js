@@ -18,6 +18,7 @@ class SingleBook extends Component {
                   this.props.updateShelf(book, event.target.value)
                 }
               >
+                {/* value changed so its not make confusion on none values */}
                 <option value="moveTo" disabled>
                   Move to...
                 </option>

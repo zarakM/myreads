@@ -1,6 +1,6 @@
 # MyReads Udacity nanodegree project
 
-This is book tracking app whether you are reading book or read the book or willing to read in future it keep track of all of your favourite books given the search term in SEARCH_TERMS.md you can ee what type of books you can search about. keep it to the shelf for reading
+This is book tracking app whether you are reading book or read the book or willing to read in future it keep track of all of your favourite books given the search term in SEARCH_TERMS.md you can ee what type of books you can search about. keep it to the shelf whereas required
 
 ## Installing & Running
 
@@ -29,7 +29,6 @@ This is book tracking app whether you are reading book or read the book or willi
     └── index.js # You should not need to modify this file. It is used for DOM rendering only.
 ```
 
-Remember that good React design practice is to create new JS files for each component and use import/require statements to include them where they are needed.
 
 ## Backend Server
 
