@@ -1,29 +1,35 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import * as BooksAPI from './BooksAPI';
-import SingleBook from './SingleBook';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import * as BooksAPI from "./BooksAPI";
+import SingleBook from "./SingleBook";
 
 class Search extends Component {
   state = {
     searchBooks: []
-  }
+  };
 
-  updateQuery = (query) => {
-    BooksAPI.search(query, 10).then((books) => {
-      this.setState({
-        searchBooks: books.error ? [] : books
-      });
-    }).catch(error=>{
-      console.log( error )
-    });
-  }
+  updateQuery = query => {
+    //this line has been changed to check if there is no character in string then
+    //empty then dont search for results
+    query === ""
+      ? this.setState({ searchBooks: [] })
+      : BooksAPI.search(query, 10)
+          .then(books => {
+            this.setState({
+              searchBooks: books.error ? [] : books
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          });
+  };
 
   render() {
-    const mergedBooks = this.state.searchBooks.map((searchBook) => {
-      const intersectedBook = this.props.books.find((book) => {
+    const mergedBooks = this.state.searchBooks.map(searchBook => {
+      const intersectedBook = this.props.books.find(book => {
         return book.id === searchBook.id;
       });
-      searchBook.shelf = intersectedBook ? intersectedBook.shelf : 'none';
+      searchBook.shelf = intersectedBook ? intersectedBook.shelf : "none";
 
       return searchBook;
     });
@@ -31,10 +37,9 @@ class Search extends Component {
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <Link
-            to='/'
-            className='close-search'
-          >Close</Link>
+          <Link to="/" className="close-search">
+            Close
+          </Link>
           <div className="search-books-input-wrapper">
             {/*
               NOTES: The search from BooksAPI is limited to a particular set of search terms.
@@ -47,13 +52,13 @@ class Search extends Component {
             <input
               type="text"
               placeholder="Search by title or author"
-              onChange={(event) => this.updateQuery(event.target.value)}
+              onChange={event => this.updateQuery(event.target.value)}
             />
           </div>
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {mergedBooks.map((book) => (
+            {mergedBooks.map(book => (
               <SingleBook
                 key={book.id}
                 book={book}
@@ -65,6 +70,6 @@ class Search extends Component {
       </div>
     );
   }
-};
+}
 
 export default Search;

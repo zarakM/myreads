@@ -8,12 +8,8 @@ class SingleBook extends Component {
       <li>
         <div className="book">
           <div className="book-top">
-
             {book.imageLinks && book.imageLinks.thumbnail ? (
-              <img
-              className="book-cover"
-              src={book.imageLinks.thumbnail}
-              ></img>
+              <img alt="Books cover" className="book-cover" src={book.imageLinks.thumbnail}></img>
             ) : null}
             <div className="book-shelf-changer">
               <select
@@ -22,7 +18,7 @@ class SingleBook extends Component {
                   this.props.updateShelf(book, event.target.value)
                 }
               >
-                <option value="none" disabled>
+                <option value="moveTo" disabled>
                   Move to...
                 </option>
                 <option value="currentlyReading">Currently Reading</option>
